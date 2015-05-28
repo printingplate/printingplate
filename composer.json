@@ -1,0 +1,33 @@
+{
+  "name" : "superinteractive/SuperSkeleton",
+  "description" : "Composer.json file for SuperSkeleton",
+  "license" : "GPL-2.0+",
+  "homepage": "https://www.superinteractive.com",
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress",
+        "type": "webroot",
+        "version": "4.2.2",
+        "dist": {
+          "type": "zip",
+          "url": "http://nl.wordpress.org/wordpress-4.2.2-nl_NL.zip"
+        },
+        "require" : {
+          "fancyguy/webroot-installer": "1.0.0"
+        }
+      }
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "wordpress": "4.2.2",
+    "fancyguy/webroot-installer": "1.0.0",
+//    "elasticsearch/elasticsearch": "~0.4",
+  },
+  "extra": {
+    "webroot-dir": "app/www/wp",
+    "webroot-package": "wordpress"
+  }
+}

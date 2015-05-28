@@ -1,0 +1,29 @@
+RewriteEngine On
+RewriteBase /
+
+# MAINTENANCE-PAGE REDIRECT
+
+#<IfModule mod_rewrite.c>
+#RewriteEngine on
+#RewriteCond %{REMOTE_ADDR} !^92\.111\.254\.99
+#RewriteCond %{REQUEST_URI} !/maintenance\.html$ [NC]
+#RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif|svg|css|js)$ [NC]
+#RewriteRule .* /maintenance.html [R=302,L]
+#</IfModule>
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteRule ^index\.php$ - [L]
+
+# add a trailing slash to /wp-admin
+RewriteRule ^wp-admin$ wp-admin/ [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^(wp-(content|admin|includes).*) wp/$1 [L]
+RewriteRule ^(.*\.php)$ wp/$1 [L]
+RewriteRule . index.php [L]
+</IfModule>
+
+# END WordPress
