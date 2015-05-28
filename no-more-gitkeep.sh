@@ -39,5 +39,6 @@ for line in $(git ls-files | grep '/.gitkeep$'); do
     if [ $EXTRA_FILES -ne "1" ]; then
         # git is tracking a file in the directory other than .gitkeep
         rm "$line"
+        echo "Removing $line"
     fi
 done
