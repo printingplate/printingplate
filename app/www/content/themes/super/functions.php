@@ -72,7 +72,7 @@ class Super_Theme {
 
     $allowed_ips = array( '92.111.254.99' );
 
-    if( ! is_user_logged_in() && ! in_array( $_SERVER['REMOTE_ADDR'], $allowed_ips ) {
+    if( ! is_user_logged_in() && ! in_array( $_SERVER['REMOTE_ADDR'], $allowed_ips ) ) {
 
       $redirect_url = trailingslashit( get_site_url() ) . 'wp-login.php?reauth=1&redirect_to='.urlencode( home_url( $_SERVER["REQUEST_URI"] ) );
 
