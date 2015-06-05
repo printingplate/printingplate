@@ -84,7 +84,7 @@ define('NONCE_SALT',       'X<1z.EgT~ne``_IminLx4}1]%<wxx}9M^s(dCUc[z_=y35tyKt0q
 // Table prefix
 // Change this if you have multiple installs in the same database
 // ==============================================================
-$table_prefix  = 'super_';
+$table_prefix  = 'lp_';
 
 // ===========
 // Miscellaneous settings
