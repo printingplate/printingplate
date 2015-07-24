@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Slightly edited, original:
 # no-more-gitkeep.sh: https://github.com/mark-rushakoff/no-more-gitkeep/blob/master/no-more-gitkeep.sh
 
 # MIT License Copyright (c) 2012 Mark Rushakoff

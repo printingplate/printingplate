@@ -1,18 +1,18 @@
 {
-  "name" : "superinteractive/SuperSkeleton",
-  "description" : "Composer.json file for SuperSkeleton",
+  "name" : "Emerce/e",
+  "description" : "Composer.json file for this project",
   "license" : "GPL-2.0+",
-  "homepage": "https://www.superinteractive.com",
+  "homepage": "https://www.emerce.nl",
   "repositories": [
     {
       "type": "package",
       "package": {
         "name": "wordpress",
         "type": "webroot",
-        "version": "4.2.2",
+        "version": "4.2.3",
         "dist": {
           "type": "zip",
-          "url": "http://nl.wordpress.org/wordpress-4.2.2-nl_NL.zip"
+          "url": "http://nl.wordpress.org/wordpress-4.2.3-nl_NL.zip"
         },
         "require" : {
           "fancyguy/webroot-installer": "1.0.0"
@@ -22,9 +22,9 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "wordpress": "4.2.2",
-    "fancyguy/webroot-installer": "1.0.0"
-
+    "wordpress": "4.2.3",
+    "fancyguy/webroot-installer": "1.0.0",
+    "vlucas/phpdotenv": "^2.0"
   },
   "extra": {
     "webroot-dir": "app/www/wp",
