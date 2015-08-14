@@ -1,7 +1,5 @@
-# SuperSkeleton
+# PrintingPlate
 
-### Instructions:
+A professional environment for WordPress based applications
 
-1. Download
-1. Use
-1. Profit
+This is still very much under construction.
