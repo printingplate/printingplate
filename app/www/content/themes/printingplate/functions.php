@@ -1,6 +1,6 @@
 <?php
 
-class Super_Theme {
+class PrinterPlate_Theme {
 
   /**
    * Constructor, uses hooks to integrate functionalities into WordPress
@@ -206,7 +206,7 @@ class Super_Theme {
     echo '<style type="text/css">';
     echo '.login h1 a {';
     echo 'width:100%;';
-    echo 'background-image: url('.$this->theme_url( 'assets/images/logo.svg' ).');';
+    echo 'background-image: url('.$this->theme_url( 'assets/images/logo.png' ).');';
     echo 'background-size: 100%;';
     echo 'padding-bottom: 30px;}';
     echo '</style>';
@@ -231,12 +231,12 @@ class Super_Theme {
 
 }
 
-new Super_Theme;
+new PrinterPlate_Theme;
 
-function super_theme_url( $path ) {
-  return Super_Theme::theme_url( $path );
+function pp_theme_url( $path ) {
+  return PrinterPlate_Theme::theme_url( $path );
 }
 
-function super_get_featured_image_url( $post_id, $size ) {
-  return Super_Theme::get_feature_image_url( $post_id, $size );
+function pp_get_featured_image_url( $post_id, $size ) {
+  return PrinterPlate_Theme::get_feature_image_url( $post_id, $size );
 }
