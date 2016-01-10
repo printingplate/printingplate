@@ -1,9 +1,6 @@
 var config = {}
 
-config.appPath                    = './app/';
-config.sourcePath                 = config.appPath + 'src/';
-config.assetsPath                 = config.sourcePath + "assets/";
-config.bowerComponents            = './bower_components/';
-config.buildPath                  = config.appPath+'build/';
+config.sourcePath = './resources/assets/';
+config.destPath   = './app/themes/printingplate/assets/';
 
-module.exports                    = config;
+module.exports    = config;

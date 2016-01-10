@@ -1,6 +1,5 @@
 /shared
-/app/www/wp/
-/app/www/wp-local-config.php
+/public/wp/
 
 /app/www/content/upgrade
 /app/www/content/uploads

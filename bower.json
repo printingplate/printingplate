@@ -2,7 +2,8 @@
   "name": "PrintingPlate",
   "version": "0.1.0",
   "authors": [
-    "Arden de Raaij <a.de.raaij@gmail.com>"
+    "Bastiaan van Dreunen <bastiaan@superinteractive.com>",
+    "Arden de Raaij <arden@superinteractive.com>"
   ],
   "license": "MIT",
   "ignore": [

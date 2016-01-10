@@ -1,5 +1,4 @@
 var
-  browserSync         = require('browser-sync'),
   gulp                = require('gulp'),
   plugins             = require('gulp-load-plugins')(),
   config              = require('../config/scripts-standalone')
@@ -15,8 +14,6 @@ gulp.task('scripts:standalone', function() {
 
   // Distribute to build
   .pipe(gulp.dest(config.dest))
-
-  .pipe(browserSync.reload({stream:true}))
 
   // If is watching
   .pipe(plugins.if(global.isWatching, plugins.notify({ message: 'Standalone scripts task complete' })));

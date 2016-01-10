@@ -4,5 +4,5 @@ var
   config = require('../config/index');
 
 gulp.task('clean', function (cb) {
-  del(config.buildPath, cb);
+  del(config.destPath, cb);
 });

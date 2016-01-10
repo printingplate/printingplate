@@ -6,16 +6,12 @@ gulp.task('build', function(cb) {
   plugins.sequence(
     'clean',
     [
-      'bower'
-    ],
-    [
       'images',
       'scripts:standalone'
     ],
     [
       'styles',
-      'scripts',
-      'templates'
+      'scripts'
     ],
     cb
   );

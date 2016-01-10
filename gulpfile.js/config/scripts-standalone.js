@@ -1,6 +1,6 @@
 var config = require('./')
 
 module.exports = {
-  source: config.assetsPath+'js/standalone/*',
-  dest: config.buildPath+'assets/js/standalone'
+  source: config.sourcePath+'js/vendor/*',
+  dest: config.destPath+'/js/vendor'
 }
