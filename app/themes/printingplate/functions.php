@@ -1,6 +1,6 @@
 <?php
 
-class PrinterPlate_Theme {
+class PrintingPlate_Theme {
 
   /**
    * Constructor, uses hooks to integrate functionalities into WordPress
@@ -231,12 +231,12 @@ class PrinterPlate_Theme {
 
 }
 
-new PrinterPlate_Theme;
+new PrintingPlate_Theme;
 
 function pp_theme_url( $path ) {
-  return PrinterPlate_Theme::theme_url( $path );
+  return PrintingPlate_Theme::theme_url( $path );
 }
 
 function pp_get_featured_image_url( $post_id, $size ) {
-  return PrinterPlate_Theme::get_feature_image_url( $post_id, $size );
+  return PrintingPlate_Theme::get_feature_image_url( $post_id, $size );
 }
