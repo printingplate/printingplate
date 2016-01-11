@@ -1,5 +1,5 @@
-# PrintingPlate
+# printingplate
 
-A professional environment for WordPress based applications
+A flexibel and lightweight setup for professional WordPress projects
 
 This is still very much under construction.
