@@ -1,7 +1,7 @@
 {
   "name" : "printingplate/printingplate",
   "description" : "A flexibel and lightweight setup for professional WordPress projects",
-  "license" : "GPL-2.0+",
+  "license": "MIT",
   "homepage": "https://github.com/printingplate/printingplate",
   "repositories": [
     {
@@ -25,12 +25,13 @@
     "wordpress": "4.4.1",
     "fancyguy/webroot-installer": "1.0.0",
     "vlucas/phpdotenv": "^2.0",
-    "symfony/console": "3.0.1"
+    "symfony/console": "3.0.1",
+    "symfony/process": "3.0.1"
   },
   "autoload": {
-    "classmap": [
-      "etc/tools/cli/src/"
-    ]
+    "psr-4": {
+      "PrintingPlate\\": "etc/tools/printingplate/src"
+    }
   },
   "extra": {
     "webroot-dir": "public/wp",

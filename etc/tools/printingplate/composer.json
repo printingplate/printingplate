@@ -1,0 +1,29 @@
+{
+    "name": "printingplate/printingplate",
+    "description": "Tools for working with PrintingPlate",
+    "keywords": [
+        
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bastiaan van Dreunen",
+            "email": "bastiaan@superinteractive.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/console": "3.0.1",
+        "symfony/process": "3.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrintingPlate\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,13 +1,9 @@
-#!/usr/bin/env php
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use PrintingPlate\Command\InitCommand;
-use PrintingPlate\Project\Setup;
-
-define('PP_APP_ROOT', dirname(__FILE__));
+use PrintingPlate\Cli\InitCommand;
 
 $application = new Application();
 $application->add(new InitCommand());
