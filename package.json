@@ -1,10 +1,10 @@
 {
   "name": "PrintingPlate",
   "version": "0.1.0",
-  "description": "WP Environment",
+  "description": "A flexibel and lightweight setup for professional WordPress projects",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aderaaij/totallystatical"
+    "url": "https://github.com/printingplate/printingplate"
   },
   "keywords": [
     "gulp",
@@ -12,12 +12,12 @@
     "site",
     "generator"
   ],
-  "author": "Arden de Raaij <mail@arden.nl>",
+  "author": "Bastiaan van Dreunen <bastiaan@superinteractive.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aderaaij/totallystatical/issues"
+    "url": "https://github.com/printingplate/printingplate/issues"
   },
-  "homepage": "https://github.com/aderaaij/totallystatical",
+  "homepage": "https://github.com/printingplate/printingplate",
   "dependencies": {
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^0.10.0",
