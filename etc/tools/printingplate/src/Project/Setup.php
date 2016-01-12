@@ -5,6 +5,9 @@ namespace PrintingPlate\Project;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
+/**
+ * @todo Validate permissions on startup
+ */
 class Setup
 {
 
@@ -38,12 +41,6 @@ class Setup
     'envSecureAuthSalt',
     'envLoggedInSalt',
     'envNonceSalt'
-  ];
-
-  # Templates
-  private $templates = [
-    'env' => '../../../templates/env.mustache',
-    'style' => '../../../templates/style.mustache'
   ];
 
   public function save()
@@ -89,7 +86,7 @@ class Setup
     }
     
     $mustacheEngine = new \Mustache_Engine;
-    $template = $mustacheEngine->loadTemplate(file_get_contents(__DIR__.$this->templates['env']));
+    $template = $mustacheEngine->loadTemplate(file_get_contents($this->getTemplatePath('env')));
 
     $envFileContents = $template->render($this->config);
 
@@ -155,7 +152,7 @@ class Setup
     }
 
     $mustacheEngine = new \Mustache_Engine;
-    $template = $mustacheEngine->loadTemplate(file_get_contents(__DIR__.$this->templates['style']));
+    $template = $mustacheEngine->loadTemplate(file_get_contents($this->getTemplatePath('style')));
 
     $styleSheetFileContents = $template->render($this->config);
 
@@ -180,6 +177,11 @@ class Setup
 
     return $str;
 
+  }
+
+  private function getTemplatePath($name)
+  {
+    return PP_APP_ROOT.'/templates/'.$name.'.mustache';
   }
   
 }
