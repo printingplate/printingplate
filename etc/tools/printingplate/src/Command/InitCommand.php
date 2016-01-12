@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use PrintingPlate\Project\Project;
 use PrintingPlate\Project\Setup;
 
 class InitCommand extends Command
@@ -57,6 +56,10 @@ class InitCommand extends Command
 			'projectAuthorUrl' => [
 				'prompt' => 'Project author URL',
 				'default' => 'http://dailyplanet.com/'
+			],
+			'projectVersion' => [
+				'prompt' => 'Project version',
+				'default' => '1.0'
 			],
 			'envName' => [
 				'prompt' => 'Environment name',
@@ -133,7 +136,7 @@ class InitCommand extends Command
 	private function welcome()
 	{
 		
-		$logoFilePath = dirname(dirname(dirname((__FILE__)))).'/templates/pp-logo.txt';
+		$logoFilePath = PP_APP_ROOT.'/assets/pp-logo.txt';
 		
 		$logo = file_get_contents($logoFilePath);
 		
@@ -161,7 +164,7 @@ class InitCommand extends Command
 
 				$hint = ($question['default'] == true) ? 'Y/n' : 'y/N';
 
-				$setup->$label = $helper->ask(
+				$setup->config[$label] = $helper->ask(
 					$this->input,
 					$this->output,
 					new ConfirmationQuestion("<fg=yellow>{$question['prompt']} ({$hint}):</> ",
@@ -172,7 +175,7 @@ class InitCommand extends Command
 			}
 			else
 			{
-				$setup->$label = $helper->ask(
+				$setup->config[$label] = $helper->ask(
 					$this->input,
 					$this->output,
 					new Question("<fg=yellow>{$question['prompt']} ({$question['default']}):</> ",
