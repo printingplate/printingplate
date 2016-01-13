@@ -5,11 +5,15 @@ namespace PrintingPlate\Project;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
+use PrintingPlate\Project\Stylesheet;
+
 /**
  * @todo Validate permissions on startup
  */
 class Setup
 {
+
+  protected $version = '0.1';
 
   # Project details
   public $config = [
@@ -43,62 +47,46 @@ class Setup
     'envNonceSalt'
   ];
 
+  public $previousConfig = [];
+
   public function save()
   {
 
+    /**
+     * Set automatically configurable properties
+     */
     $this->autoConfig();
 
-    try {
-      $this->writeEnvironmentFile();
-    } catch(\Exception $e) {
-      echo "{$e->getMessage()}\n";
-      return false;
-    }
+    /**
+     * Write .env file in project root
+     */
+    $this->writeEnvFile();
 
-    try {
-      $this->setProjectFilePaths();
-    } catch (\Exception $e) {
-      echo $e->getMessage();
-      return false;
-    }
-
-    try {
-      $this->generateWpThemeStylesheet();
-    } catch(\Exception $e) {
-      echo $e->getMessage();
-      return false;
-    }
-
+    /**
+     * Set project file paths
+     */
+    $this->setProjectFilePaths();
+    
+    /**
+     * Generate WP Theme stylesheet
+     */
+    $this->writeWpThemeStylesheet();
+    
+    /**
+     * Save .pp file in project root
+     */
+    $this->writeInstallFile();
+    
+    /**
+     * All clear, proceed
+     */
     return true;
-
-  }
-
-  private function writeEnvironmentFile()
-  {
-
-    $envFile = PP_APP_ROOT.'/.env';
-
-    $fp = @fopen($envFile, 'w');
-    
-    if (!$fp)
-    {
-      throw new \Exception("Could not write to {$envFile} - Please check file permissions.");
-    }
-    
-    $mustacheEngine = new \Mustache_Engine;
-    $template = $mustacheEngine->loadTemplate(file_get_contents($this->getTemplatePath('env')));
-
-    $envFileContents = $template->render($this->config);
-
-    fwrite($fp, $envFileContents);
-    
-    fclose($fp);
 
   }
 
   private function autoConfig()
   {
-    
+
     $this->config['envSiteUrl'] = rtrim($this->config['envHome'], '/').'/wp';
 
     $saltKeys = [
@@ -119,15 +107,31 @@ class Setup
 
   }
 
+  private function writeEnvFile()
+  {
+
+    $config = $this->getEnvConfigVars();
+
+    $dest = PP_APP_ROOT.'/.env';
+
+    $template = $this->getTemplatePath('env');
+
+    $confFile = new \PrintingPlate\Project\ConfFile($config, $template, $dest);
+    $confFile->write();
+
+  }
+
   private function setProjectFilePaths()
   {
 
-    if('printingplate' == $this->config['projectShortName'])
+    $currentShortname = (empty($this->previousConfig['projectShortName'])) ?  'printingplate' : $this->previousConfig['projectShortName'];
+
+    if ($currentShortname == $this->config['projectShortName'])
     {
       return true;
     }
 
-    $process = new Process('cd '.PP_APP_ROOT.'/app/themes && mv printingplate '.$this->config['projectShortName']);
+    $process = new Process("cd ".PP_APP_ROOT."/app/themes && mv {$currentShortname} {$this->config['projectShortName']}");
     $process->run();
 
     if (!$process->isSuccessful()) {
@@ -139,30 +143,37 @@ class Setup
 
   }
 
-  private function generateWpThemeStylesheet()
+  private function writeWpThemeStylesheet()
   {
 
-    $styleSheetFile = PP_APP_ROOT.'/app/themes/'.$this->config['projectShortName'].'/style.css';
+    $config = $this->getProjectConfigVars();
 
-    $fp = @fopen($styleSheetFile, 'w');  
-    
-    if (!$fp)
-    {
-      throw new \Exception("Could not write to {$styleSheetFile} - Please check file permissions.");
-    }
+    $shortName = $this->config['projectShortName'];
 
-    $mustacheEngine = new \Mustache_Engine;
-    $template = $mustacheEngine->loadTemplate(file_get_contents($this->getTemplatePath('style')));
+    $dest = PP_APP_ROOT."/app/themes/{$shortName}/style.css";
 
-    $styleSheetFileContents = $template->render($this->config);
+    $template = $this->getTemplatePath('style');
 
-    fwrite($fp, $styleSheetFileContents);
-    
-    fclose($fp);
+    $confFile = new \PrintingPlate\Project\ConfFile($config, $template, $dest);
+    $confFile->write();
 
   }
 
-  protected function createSalt($length = 64)
+  private function writeInstallFile()
+  {
+
+    $config = array_merge(['pp_version' => $this->version], $this->getProjectConfigVars());
+
+    $dest = PP_APP_ROOT.'/.pp';
+
+    $template = $this->getTemplatePath('pp');
+
+    $confFile = new \PrintingPlate\Project\ConfFile($config, $template, $dest);
+    $confFile->write();
+
+  }
+
+  private function createSalt($length = 64)
   {
     # We leave out the = character to avoid issues with in the .env file
     $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`-~!@#$%^&*()_+,./<>?;:[]{}\|';
@@ -181,7 +192,90 @@ class Setup
 
   private function getTemplatePath($name)
   {
-    return PP_APP_ROOT.'/templates/'.$name.'.mustache';
+    return dirname(dirname(dirname(__FILE__))).'/templates/'.$name.'.mustache';
   }
+
+  private function getProjectConfigVars()
+  {
+
+    $projectConfigVars = [];
+
+    foreach ($this->config as $key => $value)
+    {
+      if (substr($key, 0, 7) == 'project')
+      {
+        $projectConfigVars[$key] = $value;
+      }
+    }
+
+    return $projectConfigVars;
+
+  }
+
+  private function getEnvConfigVars()
+  {
+
+    $envConfigVars = [];
+
+    foreach ($this->config as $key => $value)
+    {
+      if (substr($key, 0, 3) == 'env')
+      {
+        $envConfigVars[$key] = $value;
+      }
+    }
+
+    return $envConfigVars;
+
+  }
+
+  public function loadConfig()
+  {
+
+    $filePath = PP_APP_ROOT.'/.pp';
+
+    // Read file into an array of lines with auto-detected line endings
+    $autodetect = ini_get('auto_detect_line_endings');
+    ini_set('auto_detect_line_endings', '1');
+    $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    ini_set('auto_detect_line_endings', $autodetect);
+
+    $currentVars = [];
+    if (!empty($lines))
+    {
+      foreach ($lines as $line)
+      {
+        list($key, $value) = explode('=', $line);
+        $currentVars[$key] = $value;
+      }
+    }
+
+    if (!empty($currentVars))
+    {
+      foreach ($this->config as $configKey)
+      {
+        if (substr($configKey, 0, 7) == 'project')
+        {
+          $configKeyUpper = strtoupper($configKey);
+          if (!empty($currentVars[$configKeyUpper]))
+          {
+            $this->config[$configKey] = $currentVars[$configKeyUpper];
+          }
+        }
+      }
+    }
+
+    $this->previousConfig = $this->config;
+
+  }
+
+
+  // public static function checkRequirements()
+  // {
+  //   if (!is_writable())
+  //   {
+
+  //   }
+  // }
   
 }

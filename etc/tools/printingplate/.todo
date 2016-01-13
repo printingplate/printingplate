@@ -1,0 +1,6 @@
+- Database seeding
+- Verify conditions on init
+- Load dependencies
+- Gulpfile config
+- Load themes (seperate repo?)
+- Uploads

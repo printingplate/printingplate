@@ -1,17 +1,15 @@
 /shared
 /public/wp/
 
-/app/www/content/upgrade
-/app/www/content/uploads
+/public/content/upgrade
+/public/content/uploads
 
 /vendor
 /node_modules
 /bower_components
 
 .env
+.pp
 
 .sass-cache
 .DS_Store
-
-/app/www/content/plugins/google-analytics-for-wordpress/.git/
-/app/www/content/plugins/google-analytics-for-wordpress/.gitignore

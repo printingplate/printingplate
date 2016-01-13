@@ -125,7 +125,7 @@ class InitCommand extends Command
 			$this->output->writeln("\n<fg=green>");
 			$this->output->writeln("------------------------");
 			$this->output->writeln("\nSucceeded!\n");
-			$this->output->writeln("{$setup->projectName} has been setup at {$setup->envHome}");
+			$this->output->writeln("{$setup->config['projectName']} has been setup at {$setup->config['envHome']}");
 			$this->output->writeln("\n------------------------");
 			$this->output->writeln("</>\n");	
 			
@@ -136,7 +136,7 @@ class InitCommand extends Command
 	private function welcome()
 	{
 		
-		$logoFilePath = PP_APP_ROOT.'/assets/pp-logo.txt';
+		$logoFilePath = dirname(dirname(dirname(__FILE__))).'/assets/pp-logo.txt';
 		
 		$logo = file_get_contents($logoFilePath);
 		
@@ -144,6 +144,7 @@ class InitCommand extends Command
 
 		$this->output->writeln("{$this->welcome}\n");
 	}
+
 
 	private function createSetupWithInput($questions)
 	{
@@ -157,12 +158,47 @@ class InitCommand extends Command
 
 		$helper = $this->getHelper('question');
 
+		if ($this->isInstalled())
+		{
+
+			$setup->loadConfig();
+
+			$confirm = $helper->ask(
+				$this->input,
+				$this->output,
+					new ConfirmationQuestion("<fg=red>Hold up.. looks like this project has already been initialised.\nProceeding will overwrite your current settings and can not be undone.\n\nType your project name ({$setup->config['projectName']}) to confirm: </> ",
+						false,
+						"/{$setup->config['projectName']}/"
+					)
+			);
+
+			if(!$confirm)
+			{
+				$this->output->writeln("\n<fg=yellow>Installation cancelled.</>");
+				exit;
+			}
+
+		}
+
 	  foreach($questions as $label => $question)
 		{
 			if("?" == substr($question['prompt'], -1))
 			{
-
-				$hint = ($question['default'] == true) ? 'Y/n' : 'y/N';
+				if (!empty($setup->previousConfig[$label]))
+				{
+					if(true === $hint)
+					{
+						$hint = 'Y/n';
+					}
+					else
+					{
+						$hint = 'y/N';
+					}					
+				}
+				else
+				{
+					$hint = ($question['default'] == true) ? 'Y/n' : 'y/N';
+				}
 
 				$setup->config[$label] = $helper->ask(
 					$this->input,
@@ -175,10 +211,19 @@ class InitCommand extends Command
 			}
 			else
 			{
+
+				if (!empty($setup->previousConfig[$label]))
+				{
+					$hint = (string) $setup->previousConfig[$label];
+				}
+				else
+				{
+					$hint = $question['default'];
+				}
 				$setup->config[$label] = $helper->ask(
 					$this->input,
 					$this->output,
-					new Question("<fg=yellow>{$question['prompt']} ({$question['default']}):</> ",
+					new Question("<fg=yellow>{$question['prompt']} ({$hint}):</> ",
 						$question['default']
 					)
 				);
@@ -189,4 +234,11 @@ class InitCommand extends Command
 		return $setup;
 
 	}
+
+	
+	private function isInstalled()
+  {
+    return file_exists(PP_APP_ROOT.'/.pp');
+  }
+
 }
