@@ -1,7 +1,7 @@
 # PrintingPlate
-## Sanitized WordPress development
+## Build manageable WordPress apps
 
-A flexibel and lightweight setup for professional WordPress projects.
+PrintingPlate is a lightweight, professional and easy to use project setup for WordPress. It makes working with WordPress faster, more secure and more fun.
 
 ### This is still very much in development. Use with caution.
 
