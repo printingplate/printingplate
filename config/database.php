@@ -18,4 +18,4 @@ define( 'WP_SITEURL', $_ENV['PP_SITEURL'] ); // Please don't forget the /wp at t
 // Table prefix
 // Change this if you have multiple installs in the same database
 // ==============================================================
-$table_prefix  = env('PP_DBPREFIX', 'wp_');
+$table_prefix  = env('PP_DBPREFIX', 'pp_');

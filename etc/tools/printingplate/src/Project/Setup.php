@@ -71,6 +71,11 @@ class Setup
      * Generate WP Theme stylesheet
      */
     $this->writeWpThemeStylesheet();
+
+    /**
+     * Generate Gulp config/index.js
+     */
+    $this->writeGulpConfig();
     
     /**
      * Save .pp file in project root
@@ -153,6 +158,20 @@ class Setup
     $dest = PP_APP_ROOT."/app/themes/{$shortName}/style.css";
 
     $template = $this->getTemplatePath('style');
+
+    $confFile = new \PrintingPlate\Project\ConfFile($config, $template, $dest);
+    $confFile->write();
+
+  }
+
+  private function writeGulpConfig()
+  {
+
+    $config = $this->getProjectConfigVars();
+
+    $dest = PP_APP_ROOT.'/gulpfile.js/config/index.js';
+
+    $template = $this->getTemplatePath('gulp-index');
 
     $confFile = new \PrintingPlate\Project\ConfFile($config, $template, $dest);
     $confFile->write();
