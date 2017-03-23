@@ -1,22 +1,15 @@
-var
-  gulp                = require('gulp'),
-  plugins             = require('gulp-load-plugins')(),
-  config              = require('../config/images');
+var gulp        = require('gulp');
+var changed     = require('gulp-changed');
+var imagemin    = require('gulp-imagemin');
+var notify      = require('gulp-notify');
+var browserSync = require('browser-sync');
+var config      = require('../config').images;
 
-// Images
-gulp.task('images', ['svgsprite'], function() {
-  return gulp.src(config.source)
-
-  // Only add to stream if changed
-  .pipe(plugins.changed(config.dest))
-
-  // Image optimization
-  .pipe(plugins.imagemin(config.imagemin))
-
-  // Distribute to build path
-  .pipe(gulp.dest(config.dest))
-
-  // Show notification
-  .pipe(plugins.notify({ message: 'Images task complete' }));
-
+gulp.task('images', function() {
+  return gulp.src(config.src)
+    .pipe(changed(config.dest)) // Ignore unchanged files
+    .pipe(imagemin()) // Optimize
+    .pipe(gulp.dest(config.dest))
+    .pipe(browserSync.stream())
+    .pipe(notify('Images minified'));
 });

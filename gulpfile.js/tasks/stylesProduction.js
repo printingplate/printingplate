@@ -7,16 +7,15 @@ var browserSync  = require('browser-sync');
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config').sass;
 
-var settings = {};
+var settings = {
+  outputStyle: 'compressed'
+};
 
-gulp.task('styles', function() {
+gulp.task('styles:production', function() {
   return gulp.src(config.src)
-    .pipe(sourcemaps.init())
-    .pipe(sass(settings))
+    .pipe(sass(config.settings))
     .on('error', handleErrors)
-    .pipe(autoprefixer({ browsers: ['last 2 versions', '> 5%'] }))
-    .pipe(sourcemaps.write('.'))
+    .pipe(autoprefixer({ browsers: ['last 2 version'] }))
     .pipe(gulp.dest(config.dest))
-    .pipe(browserSync.stream())
     .pipe(notify('Sass complete'));
 });

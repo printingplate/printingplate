@@ -1,18 +1,11 @@
-var
-  gulp                = require('gulp'),
-  plugins             = require('gulp-load-plugins')();
+var gulp        = require('gulp');
+var runSequence = require('run-sequence');
 
-gulp.task('build', function(cb) {
-  plugins.sequence(
-    'clean',
-    [
-      'images',
-      'scripts:standalone'
-    ],
-    [
-      'styles',
-      'scripts'
-    ],
-    cb
-  );
+gulp.task('build', function(callback) {
+  runSequence('clean', [
+    'webpack:production',
+    'styles:production',
+    'svg',
+    'fonts'
+  ], callback);
 });
