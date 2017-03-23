@@ -1,8 +1,7 @@
-var
-  gulp = require('gulp'),
-  del = require('del'),
-  config = require('../config/index');
+var gulp   = require('gulp');
+var del    = require('del');
+var config = require('../config/index').baseDir;
 
-gulp.task('clean', function (cb) {
-  del(config.destPath, cb);
+gulp.task('clean', function() {
+  return del(config.build + '/**/*.*');
 });
