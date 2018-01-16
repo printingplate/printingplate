@@ -8,15 +8,14 @@ var config = {
   },
   output: {
     path: path.join(__dirname, '../../../'),
-    publicPath: '/js/',
     filename: '[name].js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?/,
-        loaders: ['babel'],
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        loaders: 'babel-loader',
       }
     ]
   },
