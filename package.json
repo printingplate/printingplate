@@ -9,16 +9,16 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "normalize.css": "^4.2.0",
     "svg4everybody": "^2.1.4"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
-    "babel-core": "^6.13.2",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-stage-0": "^6.5.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "browser-sync": "^2.16.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
@@ -37,7 +37,7 @@
     "gulp-watch": "^4.3.9",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
-    "webpack": "^1.13.2",
+    "webpack": "^3.7.1",
     "webpack-uglify-js-plugin": "^1.1.9"
   }
 }
